@@ -1,6 +1,6 @@
 @font-face { font-family: "Libre Franklin"; src: url(fonts/libre-franklin.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
 
-/* Blue Note sleeves: ink and paper grounds, flat spot inks, one heavy grotesque.
+/* Hard-bop jazz sleeves: ink and paper grounds, flat spot inks, one heavy grotesque.
    Spot inks are the same in both themes; text on them keeps at least 4.5:1. */
 :root {
   --blue: #1d5ce0;       --on-blue: #fff;

@@ -1,6 +1,6 @@
 ---
 name: Musaarr
-description: Request one hi-fi album in a single gesture and read its state, Blue Note sleeve style, until it is in Plex.
+description: Request one hi-fi album in a single gesture and read its state, hard-bop sleeve style, until it is in Plex.
 colors:
   blue: "#1d5ce0"
   on-blue: "#ffffff"
@@ -178,13 +178,13 @@ components:
 
 ## Overview
 
-**Creative North Star: "The Blue Note Sleeve"**
+**Creative North Star: "The Hard-Bop Sleeve"**
 
-Musaarr is printed, not rendered. Every surface borrows from Reid Miles's Blue Note sleeves: an ink-black or paper-white ground, one heavy grotesque set tight, square artwork with no radius, and four flat spot inks that carry meaning and nothing else. The signature is the status band: a request's state is a title block, its word set in Black on the state's spot ink, filling left to right with download progress, the text inverting exactly where the ink passes. It replaces the category's rounded cards with small coloured status chips.
+Musaarr is printed, not rendered. Every surface borrows from the hard-bop jazz sleeves of the late 1950s: an ink-black or paper-white ground, one heavy grotesque set tight, square artwork with no radius, and four flat spot inks that carry meaning and nothing else. The signature is the status band: a request's state is a title block, its word set in Black on the state's spot ink, filling left to right with download progress, the text inverting exactly where the ink passes. It replaces the category's rounded cards with small coloured status chips.
 
 Density is that of a record shelf: real covers in a 2 to 5 column grid, one bold prompt, very little chrome. Album covers are content and stay true; artist portraits are printed as a blue duotone so a person never reads as an album. Motion is an orchestrated ink wipe plus a blink for a live search in the lists; the v3 adds three physical worlds where things move as records do: the room (the Bibliothèque), the shop (the search home, racks of crates since v4) and the 3D stage (one record, printed as a halftone).
 
-Provenance: the Blue Note direction was built as the recommended option, then chosen by the owner on 22/11/2026. The tokens below record the shipped build.
+Provenance: the hard-bop direction was built as the recommended option, then chosen by the owner on 22/11/2026. The tokens below record the shipped build.
 
 **Key Characteristics:**
 - Libre Franklin only, Black 900 for display and state words, 400/600/700 for reading.
@@ -199,7 +199,7 @@ Provenance: the Blue Note direction was built as the recommended option, then ch
 Two neutral grounds and four flat spot inks; the inks never change between themes, the readable "-ink" text tints do.
 
 ### Primary
-- **Blue Note Blue** (blue): the active ink. Fills the bands for Demandé, Recherche en cours, Téléchargement, Import en cours and Importé; the Demander and Ouvrir dans Plex buttons; the tab badge; the desktop selected-tab underline; the duotone portrait ground; text selection; native accent-color. White text on it (on-blue).
+- **Ink Blue** (blue): the active ink. Fills the bands for Demandé, Recherche en cours, Téléchargement, Import en cours and Importé; the Demander and Ouvrir dans Plex buttons; the tab badge; the desktop selected-tab underline; the duotone portrait ground; text selection; native accent-color. White text on it (on-blue).
 - **Signal Blue text** (blue-ink, blue-ink-light): blue as text and strokes on the ground: links like Tout voir and Recherche (back), the selected tab icon stroke, focus rings, caret.
 
 ### Secondary
@@ -356,7 +356,7 @@ Above the full grid, the Bibliothèque is a room the user decorates: a wall, she
 - **A record on a shelf:** the cover (124px, 144px from 600px, 160px from 900px) on a 16px plank: a lighter 5px top, the front face with a halftone grain, a 2px darker edge, the 7px cast. Under the pointer or the focus, the vinyl slides up 28% out of its sleeve (.32s ease-out); as the shelf scrolls, the covers near its ends turn a few degrees.
 - **Décorer:** a panel of swatches: the wood (Chêne, Noyer, Laqué noir, Blanc, Acier), the wall (Uni, Pois, Lattes, Brique: a pattern masked at 8% of the ink), an object per shelf (Platine, Plante, Lampe, Enceinte, Casque, Cactus, or none: flat SVG drawings), which shelves show and their order. Saved on the NAS (`GET`/`PUT /api/room`, a status line « Enregistré sur le NAS. ») so the iPhone, the iPad and the computer show the same room; « Revenir à la pièce d'origine » keeps the vitrine.
 
-**The Room Rule.** Inside the room, materials (woods, clay, leaves, brass) are printed as flat tones with a halftone grain, never photographic. The spot inks keep their meaning (the turntable's label is the one blue, as on the Blue Note record), and covers stay true.
+**The Room Rule.** Inside the room, materials (woods, clay, leaves, brass) are printed as flat tones with a halftone grain, never photographic. The spot inks keep their meaning (the turntable's label is the one blue, as on the 3D record), and covers stay true.
 
 ### Le bac (the crate)
 The Bibliothèque's gesture for digging: a CSS 3D crate of records, opened by « Fouiller » on a shelf or « Au hasard ». The crate takes the whole tab, under a back link and its title.
@@ -367,7 +367,7 @@ The Bibliothèque's gesture for digging: a CSS 3D crate of records, opened by «
 
 ### La boutique en 3D (since v5, 25/11/2026)
 The shop as a room you walk into, full screen on `#disquaire`, always dark, whatever the theme: a record shop at night, never a real chain's name, logo or colours.
-- **The front:** on the search home, the room's picture (`shop3d/vitrine.jpg`, 1280×640, object-fit cover, a dark gradient at its foot), the count « 16 rayons · 1 825 disques » in brass 600 13px caps, « Entrer dans la boutique » (blue) and « Parcourir les bacs sans la 3D » (underlined text).
+- **The front:** on the search home, the room's picture (`shop3d/vitrine.jpg`, 1280×640, object-fit cover, a dark gradient at its foot), the count of rayons and records (« 24 rayons · 40 442 disques ») in brass 600 13px caps, « Entrer dans la boutique » (blue) and « Parcourir les bacs sans la 3D » (underlined text).
 - **The room:** a Paris record shop at night, warm tungsten light. Herringbone parquet in satin varnish, walls of warm painted plaster over a bottle-green dado (skirting, rail, panels, cornice), dark beams, a night street behind the green shop front. In a big shop, arcades of basket arches part the rooms one behind the other. The lamps change from room to room: brass bars of opal globes over the lines of bins in one, green enamel billiard shades in the next; prismatic pendants over the counter, tulip sconces along the walls and on the piers, a floor lamp in the listening corner. Their light is baked into the floor and the walls (the floor darkens under and at the foot of the bins), and the few real lights follow you. Each unit has a hanging board in forest green #16241d with a brass rule and the rayon's name in cream Libre Franklin 900 caps. Oak cube shelves along the walls are packed with sleeve spines, under a ledge of covers faced out; between the sconces, posters without words but a genre and a year; on the back wall, two neons (« Disques » pink, « Hi-Fi » blue). At the back stand the counter (green panels, walnut top, brass foot rail), the till, a turntable at 33⅓ between an amplifier with lit VU meters and two speakers on stands, a lounge chair on a rug, and the shop's board with its name, fitted to its language.
 - **A unit:** a painted base 78cm high, sage green with raised panels on the aisle side, a walnut rim and a dark plinth, shaded darker toward the floor; crates of light oak 60×36cm with sloped sides and a 11cm front lip; a kraft card at the back of each crate with its letters in Black; a kraft divider with the artist's name before each artist with several records. Records lean back 11°, those seen lean 49° toward you, the one in front stands, lifted 3.5cm. An owned record carries a small green sticker.
 - **Over the room:** the title, the hint, then boards for Sortir, Au hasard, « Cacher ceux que j'ai » and one per rayon (forest green, 1px edge, brass on hover and focus). Digging, a panel at the foot shows « Jazz · bac A–E · 3 sur 28 » in brass caps, the title in Black clamp 20 to 30px, artist · year · style, tags « Pressage japonais » (vermilion) and « Chez toi » (green), then « Ouvrir la page de l'album » (blue) and « Revenir dans l'allée ».
@@ -387,7 +387,7 @@ Under « Quel artiste ? », a record shop's floor in racks, never a real chain's
 - **The stock:** the site's most listened albums on ListenBrainz and the albums of the user's artists, rebuilt each day on the NAS; covers come through Musaarr (Cover Art Archive), so the CSP stays the same. While it fills, a soft-ink line says « Le disquaire se remplit… Reviens dans quelques minutes. »; with everything hidden, « Tu as déjà tout ce qu'il y a ici. ».
 
 ### La scène 3D (the stage)
-One record, the Blue Note record: black vinyl with grooves that catch a fixed light, five flat track rings, a blue label printed with « musaarr » and « HI-FI · 33 TOURS ». The scene is rendered by three.js and printed through a 45° halftone screen (4.5px cells at home, 5px in the opening): light ink on the ink ground, dark ink on paper, with a floor of fine dots so the black vinyl keeps its shape on black.
+One record: black vinyl with grooves that catch a fixed light, five flat track rings, a blue label printed with « musaarr » and « HI-FI · 33 TOURS ». The scene is rendered by three.js and printed through a 45° halftone screen (4.5px cells at home, 5px in the opening): light ink on the ink ground, dark ink on paper, with a floor of fine dots so the black vinyl keeps its shape on black.
 - **Opening:** at the first visit only, over everything (the rest of the page inert): the record slides out of a blue sleeve, the sleeve leaves, the record turns up to 33 rpm and leans back, a blue wave runs through its grooves, and the wordmark prints under it with a clip-path wipe. 3.7s; a tap, a click, any key or « Passer l'ouverture » ends it. Remembered on the device; « Revoir l'ouverture » at the end of the home plays it again.
 - **At home:** the record turns slowly (.32 rad/s) behind « Quel artiste ? » at the top right: half off the screen on a phone, whole at the right of a wide stage, under the bins. It leans with the mouse, or with the phone's tilt on Android. A mask fades it out over the text column; opacity .6 on ink, .5 on paper; .14 once results cover it.
 - **Searching:** the record speeds up to 33 rpm and a blue wave runs out through the grooves; it slows down when the results arrive.
