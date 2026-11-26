@@ -189,7 +189,7 @@ Depuis une copie du dépôt : `docker build -t musaarr .`, puis `image: musaarr`
 
 ## Mettre à jour
 
-`docker compose pull && docker compose up -d`. Pour revenir en arrière, épingler la version précédente (`ghcr.io/smile2578/musaarrr:vX.Y.Z`). Les réglages et les comptes restent dans le volume ; une sauvegarde depuis la page Réglages avant une mise à jour ne coûte rien.
+`docker compose pull && docker compose up -d`. `:latest` suit toutes les versions, `:vX` les versions d'une même majeure, `:vX.Y` seulement ses correctifs. Pour revenir en arrière, épingler la version précédente (`ghcr.io/smile2578/musaarrr:vX.Y.Z`). Les réglages et les comptes restent dans le volume ; une sauvegarde depuis la page Réglages avant une mise à jour ne coûte rien.
 
 ## Développer
 

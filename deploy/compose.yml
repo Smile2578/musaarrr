@@ -2,7 +2,7 @@
 # from the local network to create the admin account. See README.md, « Installer ».
 services:
   musaarr:
-    image: ghcr.io/smile2578/musaarrr:latest # or a version, vX.Y.Z
+    image: ghcr.io/smile2578/musaarrr:latest # or pin vX.Y.Z; vX.Y follows its fixes, vX its minor versions
     container_name: musaarr
     ports:
       - "8080:8080" # safer on the LAN address alone: "192.168.1.10:8080:8080"
