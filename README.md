@@ -176,7 +176,7 @@ Les données vont dans le volume `musaarr-data`. Pour un dossier de l'hôte à l
 
 ### Derrière Tailscale
 
-[deploy/compose.tailscale.yml](deploy/compose.tailscale.yml) ne rend Musaarr joignable que sur le tailnet, en HTTPS, par Tailscale serve. Musaarr y écoute sur `127.0.0.1:8080`, que seul le conteneur Tailscale atteint.
+[deploy/compose.tailscale.yml](deploy/compose.tailscale.yml) ne rend Musaarr joignable que sur le tailnet, en HTTPS, par Tailscale serve. Musaarr y écoute sur `127.0.0.1:8080`, et le conteneur Tailscale tourne avec une vraie interface réseau (`/dev/net/tun` et `NET_ADMIN`). En mode userspace, tailscaled remettrait à `127.0.0.1` toute connexion venue du tailnet : un appareil du tailnet atteindrait Musaarr à côté de serve et écrirait lui-même l'en-tête d'identité. Sans `/dev/net/tun` (Docker Desktop, certains NAS), ne pas utiliser `AUTH_HEADER`, ou n'ouvrir que le port 443 de cette machine dans les règles d'accès du tailnet.
 
 1. Dans la console Tailscale, activer MagicDNS et les certificats HTTPS (DNS › HTTPS Certificates), puis créer une clé d'authentification à usage unique (Settings › Keys) et la mettre dans le `.env` du compose : `TS_AUTHKEY_MUSAARR=<clé>`.
 2. Créer `ts/config/serve.json` avec le contenu de [deploy/serve.json](deploy/serve.json), puis `docker compose -f compose.tailscale.yml up -d`.
