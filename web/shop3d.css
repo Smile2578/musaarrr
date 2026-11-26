@@ -1,0 +1,88 @@
+/* ---------- Le disquaire en 3D ----------
+   The shop at night fills the screen; the words sit on painted boards over it. Always dark,
+   whatever the app's theme: it is a room, not a page. */
+
+.shop3d {
+  --board: #16241d; --board-edge: #2c4236; --cream: #efe6d2; --cream-soft: #b9ae98; --brass: #c9a25b;
+  position: fixed; inset: 0; z-index: 60; background: #0d0a08; color: var(--cream); color-scheme: dark;
+  outline: none; overscroll-behavior: contain; -webkit-tap-highlight-color: transparent;
+}
+html.is-in-shop, html.is-in-shop body { overflow: hidden; }
+.shop3d__scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; transition: opacity .18s ease; } /* dims for a jump across the shop (main.js, jump) */
+.shop3d::before { content: ""; position: absolute; inset: 0 0 auto; height: calc(env(safe-area-inset-top, 0px) + 120px); z-index: 1; pointer-events: none;
+  background: linear-gradient(rgb(13 10 8 / 80%), rgb(13 10 8 / 0%)); }
+
+.shop3d__top { position: absolute; z-index: 2; top: calc(env(safe-area-inset-top, 0px) + 12px);
+  left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.shop3d__bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.shop3d__title { margin: 0; font: 900 22px/1 var(--font); letter-spacing: -.02em; text-transform: uppercase; text-shadow: 0 2px 12px rgb(0 0 0 / 70%); }
+.shop3d__hint { margin: 0; font-size: 13px; color: var(--cream-soft); text-shadow: 0 1px 8px rgb(0 0 0 / 80%); }
+.shop3d__tools { display: flex; align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: none; pointer-events: auto; }
+.shop3d__tools button, .shop3d__hide { flex: none; padding: 7px 11px 6px; border: 1px solid var(--board-edge); border-radius: 2px;
+  background: rgb(22 36 29 / 84%); color: var(--cream); font: 700 12px/1 var(--font); letter-spacing: .06em; text-transform: uppercase;
+  cursor: pointer; transition: background-color .15s ease, border-color .15s ease; }
+.shop3d__tools button:disabled { opacity: .35; cursor: default; }
+.shop3d__tools button[aria-current] { border-color: var(--brass); } /* the rayons of the aisle you stand in */
+.shop3d__exit { border-color: var(--brass) !important; }
+.shop3d__top > .shop3d__tools { flex-wrap: wrap; } /* on a phone the rayons take a row of their own, else squeezed to nothing */
+#shop3d-aisles { flex: 1 1 0; min-width: 120px; }
+.shop3d__hide { display: flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; }
+.shop3d__hide input { margin: 0; accent-color: var(--brass); }
+@media (hover: hover) and (pointer: fine) { .shop3d__tools button:hover { background: var(--board); border-color: var(--brass); } }
+.shop3d :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+/* The shop from above (map.js): you, where you look; a click walks there. */
+.shop3d__map { position: absolute; z-index: 2; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  background: rgb(22 36 29 / 84%); border: 1px solid var(--board-edge); border-radius: 2px; box-shadow: 0 10px 28px rgb(0 0 0 / 45%); cursor: pointer; }
+
+.shop3d__tip { position: absolute; z-index: 3; left: 0; top: 0; padding: 6px 9px 5px; background: var(--cream); color: #1a1410;
+  font: 700 12px/1.2 var(--font); border-radius: 2px; pointer-events: none; white-space: nowrap; box-shadow: 0 6px 18px rgb(0 0 0 / 45%); }
+
+.shop3d__dig { position: absolute; z-index: 3; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); max-width: 720px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 22px; align-items: end;
+  padding: 16px 18px; background: rgb(22 36 29 / 92%); border: 1px solid var(--board-edge); border-top: 3px solid var(--brass);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 55%); animation: shop3d-rise .28s var(--ease-out); }
+@keyframes shop3d-rise { from { opacity: 0; transform: translateY(10px); } }
+.shop3d__text { min-width: 0; }
+.shop3d__crates { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; }
+.shop3d__step { flex: none; width: 30px; height: 30px; padding: 0; border: 1px solid var(--brass); border-radius: 2px; background: transparent; color: var(--cream); font: 700 18px/1 var(--font); cursor: pointer; }
+.shop3d__step:disabled { opacity: .35; cursor: default; }
+@media (hover: hover) and (pointer: fine) { .shop3d__step:not(:disabled):hover { background: var(--board-edge); } }
+.shop3d__pos { margin: 0; font: 600 11px/1.2 var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--brass); font-variant-numeric: tabular-nums; }
+.shop3d__dig h3 { margin: 0; font: 900 clamp(20px, 3.4vw, 30px)/1.02 var(--font); letter-spacing: -.02em; text-wrap: balance; overflow-wrap: anywhere; }
+.shop3d__meta { margin: 5px 0 0; color: var(--cream-soft); }
+.shop3d__tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+.shop3d__tags:empty { display: none; }
+.shop3d .tag { padding: 4px 7px 3px; border: 1.5px solid currentColor; font: 800 11px/1 var(--font); letter-spacing: .04em; }
+.shop3d .tag--jp { color: #ff8a70; }
+.shop3d .tag--own { color: #4cc982; }
+.shop3d__actions { display: flex; flex-direction: column; gap: 8px; }
+.shop3d__actions .btn--line { color: var(--cream); box-shadow: inset 0 0 0 1.5px var(--cream-soft); background: transparent; }
+@media (max-width: 560px) {
+  .shop3d__dig { grid-template-columns: 1fr; }
+  .shop3d__actions { flex-direction: row; }
+  .shop3d__actions .btn { flex: 1; }
+}
+
+.shop3d__loading { position: absolute; z-index: 4; inset: 0; display: grid; place-content: center; justify-items: center; gap: 18px; background: #0d0a08; }
+.shop3d__loading p { margin: 0; color: var(--cream-soft); }
+.shop3d__lp { width: 92px; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, var(--brass) 0 16%, #111 17% 19%, #1b1b1c 20% 100%);
+  box-shadow: inset 0 0 0 1px #2a2a2a, 0 0 0 6px #120e0b; animation: shop3d-spin 1.8s linear infinite; }
+@keyframes shop3d-spin { to { transform: rotate(1turn); } }
+
+/* The shop front on the home page: a picture of the room and the door. */
+.shop__front { position: relative; display: grid; align-content: end; min-height: clamp(260px, 42vw, 420px); margin-top: 12px;
+  padding: 20px; overflow: hidden; border-radius: 2px; color: #efe6d2; isolation: isolate; }
+.shop__front img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.shop__front::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgb(13 10 8 / 0%) 35%, rgb(13 10 8 / 85%)); }
+.shop__front-count { margin: 0 0 12px; font: 600 13px/1.3 var(--font); letter-spacing: .06em; text-transform: uppercase; color: #c9a25b; }
+.shop__front-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.shop__front .btn--blue { padding-inline: 22px; }
+.shop__front-flat { padding: 0; border: 0; background: none; color: #efe6d2; font: 600 14px/1.2 var(--font); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.shop.is-3d :is(.shop__how, .shop__hide, .aisles, .shop__floor, #shop-random) { display: none; }
+.shop:not(.is-3d) .shop__front { display: none; }
+
+@media (prefers-reduced-motion: reduce) { .shop3d__dig { animation: none; } .shop3d__scene { transition: none; } .shop3d__lp { animation-duration: 6s; } }

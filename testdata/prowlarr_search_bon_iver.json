@@ -1,0 +1,555 @@
+[
+ {
+  "guid": "REDACTED",
+  "age": 173,
+  "size": 98259388,
+  "grabs": 0,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "Bon Iver - Bon Iver, Bon Iver (2011) [MP3 CBR 320KBPS]",
+  "publishDate": "2026-06-03T01:36:12Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3010,
+    "name": "Audio/MP3",
+    "subCategories": []
+   },
+   {
+    "id": 103010,
+    "subCategories": []
+   }
+  ],
+  "seeders": 1,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "Bon Iver - Bon Iver, Bon Iver (2011) [MP3 CBR 320KBPS].torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 192,
+  "size": 390778775,
+  "grabs": 38,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "Taylor Swift - Folklore (2020) [Flac 16/44]",
+  "publishDate": "2026-05-15T00:04:56Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 103000,
+    "subCategories": []
+   }
+  ],
+  "seeders": 11,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "Taylor Swift - Folklore (2020) [Flac 16/44].torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 27,
+  "size": 1177085743,
+  "grabs": 13,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "Taylor.Swift.evermore.Explicit.24BIT.88.2KHZ.WEB.FLAC.2020",
+  "publishDate": "2026-10-27T03:10:25Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 103000,
+    "subCategories": []
+   }
+  ],
+  "seeders": 2,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "Taylor.Swift.evermore.Explicit.24BIT.88.2KHZ.WEB.FLAC.2020.torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 43,
+  "size": 2478746151,
+  "grabs": 32,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "VA.Rockin.Vibes.09.10.2026.16BIT.44.1KHZ.WEB.FLAC.2026-EICHBAUM",
+  "publishDate": "2026-10-11T11:09:09Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 103000,
+    "subCategories": []
+   }
+  ],
+  "seeders": 0,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "VA.Rockin.Vibes.09.10.2026.16BIT.44.1KHZ.WEB.FLAC.2026-EICHBAUM.torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 192,
+  "size": 236999186,
+  "grabs": 0,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "[JAZZ] - Matt Carmichael - Dancing with Embers - 2025 - FLAC 16BITS 44 1KHZ-EICHBAUM",
+  "publishDate": "2026-05-15T00:04:46Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 103000,
+    "subCategories": []
+   }
+  ],
+  "seeders": 4,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "[JAZZ] - Matt Carmichael - Dancing with Embers - 2025 - FLAC 16BITS 44 1KHZ-EICHBAUM.torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 204,
+  "size": 517778452,
+  "grabs": 11,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "Boney.M.Rivers.Of.Babylon.Presenting.2008.CD.FLAC.16bits.44.1kHz-Criss050607",
+  "publishDate": "2026-05-03T06:09:06Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 103000,
+    "subCategories": []
+   }
+  ],
+  "seeders": 2,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "Boney.M.Rivers.Of.Babylon.Presenting.2008.CD.FLAC.16bits.44.1kHz-Criss050607.torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 188,
+  "size": 89930046,
+  "grabs": 12,
+  "indexerId": 2,
+  "indexer": "Indexer A",
+  "title": "Bon.Iver.For.Emma.Forever.Ago.2008.WEB.mp3.320kbps-NoTag",
+  "publishDate": "2026-05-19T08:07:38Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 103000,
+    "subCategories": []
+   }
+  ],
+  "seeders": 1,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "Bon.Iver.For.Emma.Forever.Ago.2008.WEB.mp3.320kbps-NoTag.torrent",
+  "files": 0,
+  "commentUrl": "REDACTED",
+  "infoHash": "REDACTED"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 235,
+  "size": 1725261015,
+  "grabs": 504,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Folk-rock, Indie Folk) Bon Iver - Дискография: 26 релизов (2008-2026), MP3, 128-320 kbps",
+  "publishDate": "2026-04-02T13:07:40Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3010,
+    "name": "Audio/MP3",
+    "subCategories": []
+   },
+   {
+    "id": 101707,
+    "subCategories": []
+   }
+  ],
+  "seeders": 3,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Folk-rock, Indie Folk) Bon Iver - Дискография: 26 релизов (2008-2026), MP3, 128-320 kbps.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 591,
+  "size": 245477243,
+  "grabs": 1533,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Indie Folk | Rock) [WEB] Bon Iver - Sable, fable - 2025, FLAC (tracks), lossless",
+  "publishDate": "2025-04-11T10:04:57Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3040,
+    "name": "Audio/Lossless",
+    "subCategories": []
+   },
+   {
+    "id": 101706,
+    "subCategories": []
+   }
+  ],
+  "seeders": 22,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Indie Folk | Rock) [WEB] Bon Iver - Sable, fable - 2025, FLAC (tracks), lossless.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 591,
+  "size": 874760893,
+  "grabs": 1371,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "[HR24][OF][LDR] Bon Iver - Sable, fable - 2025 (Folk-Rock, Indie Folk)",
+  "publishDate": "2025-04-10T15:51:55Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3010,
+    "name": "Audio/MP3",
+    "subCategories": []
+   },
+   {
+    "id": 101396,
+    "subCategories": []
+   }
+  ],
+  "seeders": 12,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "[HR24][OF][LDR] Bon Iver - Sable, fable - 2025 (Folk-Rock, Indie Folk).torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 2643,
+  "size": 222211217,
+  "grabs": 4030,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Indie Folk) [CD] Bon Iver - i,i - 2019, FLAC (tracks+.cue), lossless",
+  "publishDate": "2019-08-29T13:24:31Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3040,
+    "name": "Audio/Lossless",
+    "subCategories": []
+   },
+   {
+    "id": 101706,
+    "subCategories": []
+   }
+  ],
+  "seeders": 17,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Indie Folk) [CD] Bon Iver - i,i - 2019, FLAC (tracks+.cue), lossless.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 5624,
+  "size": 537350282,
+  "grabs": 8145,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Indie/Folk) Bon Iver - Коллекция: 2008-2011 (3 CD+covers), FLAC (tracks+.cue), lossless",
+  "publishDate": "2011-07-01T10:11:23Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3040,
+    "name": "Audio/Lossless",
+    "subCategories": []
+   },
+   {
+    "id": 101706,
+    "subCategories": []
+   }
+  ],
+  "seeders": 10,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Indie/Folk) Bon Iver - Коллекция: 2008-2011 (3 CD+covers), FLAC (tracks+.cue), lossless.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 1513,
+  "size": 470242676,
+  "grabs": 267,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "[MC] Bon Iver - Bon Iver, Bon Iver (5.1 mix) - 2011/2012 (Post-Rock, Indie-Folk, Chamber-Pop, Experimental)",
+  "publishDate": "2022-10-02T09:20:58Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 101852,
+    "subCategories": []
+   }
+  ],
+  "seeders": 7,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "[MC] Bon Iver - Bon Iver, Bon Iver (5.1 mix) - 2011/2012 (Post-Rock, Indie-Folk, Chamber-Pop, Experimental).torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 3689,
+  "size": 645161776,
+  "grabs": 2299,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "[LP] Bon Iver - 22, A Million (2016) - 2016 (Folk,ndie, alternative)",
+  "publishDate": "2016-10-16T19:01:37Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 100123,
+    "subCategories": []
+   }
+  ],
+  "seeders": 3,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "[LP] Bon Iver - 22, A Million (2016) - 2016 (Folk,ndie, alternative).torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 4337,
+  "size": 2103505183,
+  "grabs": 4100,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Progressive Rock) [2LP] [24/96] Peter Gabriel - Scratch My Back (2010) / And I'll Scratch Yours (2013) - 2013 (feat. Lou Reed, Brian Eno, Elbow, David Byrne, Bon Iver, Randy Newman & more), FLAC (tracks+.cue)",
+  "publishDate": "2015-01-08T07:23:15Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 101756,
+    "subCategories": []
+   }
+  ],
+  "seeders": 4,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Progressive Rock) [2LP] [24/96] Peter Gabriel - Scratch My Back (2010) / And I'll Scratch Yours (2013) - 2013 (feat. Lou Reed, Brian Eno, Elbow, David Byrne, Bon Iver, Randy Newman & more), FLAC (tracks+.cue).torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 4519,
+  "size": 713591015,
+  "grabs": 3228,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Folk Rock / Acoustic / Indie Rock / Folk) [LP] [24/96] Bon Iver - For Emma, Forever Ago - 2007 (2008) (US), FLAC (tracks), lossless",
+  "publishDate": "2014-07-09T19:49:35Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 100123,
+    "subCategories": []
+   }
+  ],
+  "seeders": 9,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Folk Rock / Acoustic / Indie Rock / Folk) [LP] [24/96] Bon Iver - For Emma, Forever Ago - 2007 (2008) (US), FLAC (tracks), lossless.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 2651,
+  "size": 1158891853,
+  "grabs": 1538,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Indie folk, chamber Pop, folktronica) [CD`4|WEB`2] Bon Iver - Дискография - 2007-2019, ALAC (tracks+.cue), lossless",
+  "publishDate": "2019-08-20T22:45:50Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3040,
+    "name": "Audio/Lossless",
+    "subCategories": []
+   },
+   {
+    "id": 101927,
+    "subCategories": []
+   }
+  ],
+  "seeders": 5,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Indie folk, chamber Pop, folktronica) [CD`4|WEB`2] Bon Iver - Дискография - 2007-2019, ALAC (tracks+.cue), lossless.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 2835,
+  "size": 413358441,
+  "grabs": 638,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Indie folk, chamber Pop, folktronica) [CD`4|WEB`1] Bon Iver - Дискография - 2007-2016, AAC (tracks), 320 kbps",
+  "publishDate": "2019-02-17T19:55:30Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 102248,
+    "subCategories": []
+   }
+  ],
+  "seeders": 6,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Indie folk, chamber Pop, folktronica) [CD`4|WEB`1] Bon Iver - Дискография - 2007-2016, AAC (tracks), 320 kbps.torrent"
+ },
+ {
+  "guid": "REDACTED",
+  "age": 3619,
+  "size": 84721485,
+  "grabs": 943,
+  "indexerId": 3,
+  "indexer": "Indexer B",
+  "title": "(Alternative, Singer/Songwriter, Electronic, Indie Rock) Bon Iver - 22, A Million - 2016, AAC (tracks), 256 kbps (WEB)",
+  "publishDate": "2016-12-26T11:49:10Z",
+  "downloadUrl": "REDACTED",
+  "infoUrl": "REDACTED",
+  "indexerFlags": [],
+  "categories": [
+   {
+    "id": 3000,
+    "name": "Audio",
+    "subCategories": []
+   },
+   {
+    "id": 102240,
+    "subCategories": []
+   }
+  ],
+  "seeders": 3,
+  "leechers": 0,
+  "protocol": "torrent",
+  "fileName": "(Alternative, Singer/Songwriter, Electronic, Indie Rock) Bon Iver - 22, A Million - 2016, AAC (tracks), 256 kbps (WEB).torrent"
+ }
+]

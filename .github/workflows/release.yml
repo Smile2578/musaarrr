@@ -1,0 +1,53 @@
+name: Release
+
+# release-please keeps a release PR open from the conventional commits on main. Merging it tags
+# the version and writes the notes; GoReleaser then builds, signs and pushes the image to GHCR.
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  goreleaser:
+    needs: release-please
+    if: needs.release-please.outputs.created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # the archives and checksums on the release
+      packages: write # the image on GHCR
+      id-token: write # cosign's keyless signature, by this workflow's identity
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # GoReleaser reads the tag release-please just made
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: sigstore/cosign-installer@v3
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

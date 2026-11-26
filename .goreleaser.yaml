@@ -1,0 +1,45 @@
+# A release: Linux binaries, and an image for amd64 and arm64 on GHCR with its SBOM, both signed
+# with cosign, keyless, by the release workflow's GitHub identity. Run by
+# .github/workflows/release.yml once release-please has tagged the version.
+version: 2
+project_name: musaarr
+
+builds:
+  - env: [CGO_ENABLED=0]
+    goos: [linux]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags: [-s -w]
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+checksum:
+  name_template: checksums.txt
+
+dockers_v2:
+  - images: [ghcr.io/smile2578/musaarrr]
+    dockerfile: Dockerfile.release
+    tags: ["{{ .Tag }}", latest]
+    labels:
+      org.opencontainers.image.title: Musaarr
+      org.opencontainers.image.description: Album requests for Lidarr and Plex
+      org.opencontainers.image.source: https://github.com/Smile2578/musaarrr
+      org.opencontainers.image.licenses: GPL-3.0-or-later
+      org.opencontainers.image.version: "{{ .Version }}"
+      org.opencontainers.image.revision: "{{ .FullCommit }}"
+      org.opencontainers.image.created: "{{ .CommitDate }}"
+
+signs: # the checksums cover the archives
+  - cmd: cosign
+    artifacts: checksum
+    signature: "${artifact}.sigstore.json"
+    args: [sign-blob, "--bundle=${signature}", "${artifact}", --yes]
+
+docker_signs: # the multi-platform image, by digest
+  - cmd: cosign
+    args: [sign, "${artifact}@${digest}", --yes]
+
+release:
+  mode: keep-existing # release-please wrote the notes
+
+changelog:
+  disable: true

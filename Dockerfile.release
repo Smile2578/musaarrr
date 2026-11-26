@@ -1,0 +1,14 @@
+# The release image. GoReleaser builds the binaries (.goreleaser.yaml) and this packs the one for
+# each platform. A build from source on the machine itself uses ./Dockerfile instead.
+FROM gcr.io/distroless/static-debian13:nonroot@sha256:aafe993665bf6200db38a02c11a9351e782a84b6a45e7f33b6695638c88e3931
+ARG TARGETPLATFORM
+COPY $TARGETPLATFORM/musaarr /musaarr
+# An empty /data the nonroot user owns, so that a new Docker volume is writable without a chown.
+COPY --chown=65532:65532 --from=gcr.io/distroless/static-debian13:nonroot@sha256:aafe993665bf6200db38a02c11a9351e782a84b6a45e7f33b6695638c88e3931 /home/nonroot /data
+# Reachable through a published port, as other *arr images are; ./Dockerfile keeps 127.0.0.1 for
+# a sidecar proxy that shares the container's network.
+ENV DATA_DIR=/data LISTEN_ADDR=:8080
+EXPOSE 8080
+VOLUME /data
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD ["/musaarr", "-healthcheck"]
+ENTRYPOINT ["/musaarr"]

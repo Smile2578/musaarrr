@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en" data-i18n-wait>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-title" content="Musaarr">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Musaarr</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="rack.css">
+<link rel="stylesheet" href="shop3d.css">
+<script src="i18n.js" defer></script>
+<script src="app.js" defer></script>
+<script src="session.js" defer></script>
+<script src="rack.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="wordmark" id="home" href="./">musaarr</a>
+  <nav class="tabbar" aria-label="Navigation" data-i18n-aria-label="nav.label">
+    <div class="tabbar__list" role="tablist">
+      <button class="tab" id="tab-search" type="button" role="tab" aria-selected="true" aria-controls="panel-search" data-panel="search">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+        <span data-i18n="nav.search">Search</span>
+      </button>
+      <button class="tab" id="tab-library" type="button" role="tab" aria-selected="false" aria-controls="panel-library" data-panel="library" tabindex="-1">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 4v16M10 4v16M14.5 5l4.5 15"/></svg>
+        <span data-i18n="nav.library">Library</span>
+        <span class="tab__badge" id="active-count" hidden></span>
+      </button>
+    </div>
+  </nav>
+  <div class="account">
+    <a class="btn btn--quiet btn--auto" id="settings" href="/setup.html" hidden data-i18n="auth.settings"></a>
+    <button class="btn btn--quiet btn--auto" id="signout" type="button" hidden data-i18n="auth.logout"></button>
+  </div>
+</header>
+
+<div class="offline" id="offline" role="status" hidden>
+  <p class="offline__text" data-i18n="offline.text"></p>
+  <button class="btn btn--line btn--auto" id="offline-retry" type="button" data-i18n="action.retry"></button>
+</div>
+
+<main>
+  <section id="panel-search" class="panel" role="tabpanel" aria-labelledby="tab-search">
+    <h1 class="visually-hidden" data-i18n="search.heading"></h1>
+    <form class="searchbar" role="search" id="search-form">
+      <label for="q" class="visually-hidden" data-i18n="search.placeholder"></label>
+      <svg class="searchbar__icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+      <input id="q" name="q" type="search" data-i18n-placeholder="search.placeholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="100">
+    </form>
+
+    <div id="search-view">
+      <div class="prompt" id="prompt">
+        <p class="prompt__big" data-i18n="search.prompt"></p>
+        <p class="prompt__small" data-i18n="search.promptSmall"></p>
+        <section class="block shop" id="shop" aria-labelledby="h-shop">
+          <div class="block__head">
+            <h2 class="block__title" id="h-shop" data-i18n="shop.title"></h2>
+            <button class="more" id="shop-random" type="button" data-i18n="action.random" hidden></button>
+          </div>
+          <p class="block__sub" id="shop-sub" data-i18n="shop.sub"></p>
+          <div class="shop__front" id="shop-front">
+            <img data-i18n-src="shop.frontImage" alt="" width="1280" height="640" loading="lazy" decoding="async">
+            <p class="shop__front-count" id="shop-front-count"></p>
+            <div class="shop__front-actions">
+              <a class="btn btn--blue btn--auto" id="shop-enter" href="#disquaire" data-i18n="shop.enter"></a>
+              <button class="shop__front-flat" id="shop-flat" type="button" data-i18n="shop.flat"></button>
+            </div>
+          </div>
+          <button class="more" id="shop-to-3d" type="button" data-i18n="shop.to3d" hidden></button>
+          <p class="shop__how shop__how--fine" data-i18n="shop.howFine"></p>
+          <p class="shop__how shop__how--touch" data-i18n="shop.howTouch"></p>
+          <label class="shop__hide"><input type="checkbox" id="shop-hide"> <span data-i18n="shop.hide"></span></label>
+          <p class="shop__wait" id="shop-wait" role="status" hidden></p>
+          <nav class="aisles" id="aisles" data-i18n-aria-label="shop.aisles" hidden></nav>
+          <div class="shop__floor">
+            <div class="shop__opening" id="shop-opening" role="status">
+              <div class="unpack" aria-hidden="true"><span class="unpack__lp"></span><span class="unpack__lp"></span><span class="unpack__lp"></span><span class="unpack__lip"></span></div>
+              <p class="shop__opening-text" data-i18n="shop.unpacking"></p>
+            </div>
+            <div id="shop-racks"></div>
+          </div>
+          <p class="visually-hidden" id="bac-help" data-i18n="shop.bacHelp"></p>
+        </section>
+        <section class="block suggest" id="suggest-block" aria-labelledby="h-suggest" hidden>
+          <h2 class="block__title" id="h-suggest" data-i18n="suggest.title"></h2>
+          <p class="block__sub" data-i18n="suggest.sub"></p>
+          <ul class="grid rail" id="suggest"></ul>
+        </section>
+        <section class="block recent" id="recent-block" aria-labelledby="h-recent" hidden>
+          <div class="block__head">
+            <h2 class="block__title" id="h-recent" data-i18n="recent.title"></h2>
+            <button class="more" id="see-all" type="button" data-i18n="action.seeAll"></button>
+          </div>
+          <ul class="list list--compact" id="recent"></ul>
+        </section>
+        <button class="more replay" id="replay" type="button" data-i18n="opening.replay" hidden></button>
+        <p class="lang"><label class="pick"><span class="visually-hidden" data-i18n="lang.label"></span><select id="lang"></select></label></p>
+      </div>
+      <div class="notice" id="search-notice" role="status" hidden>
+        <p class="notice__text" id="search-hint"></p>
+        <button class="btn btn--line btn--auto" id="search-retry" type="button" data-i18n="action.retry" hidden></button>
+      </div>
+      <section class="block" id="artists-block" aria-labelledby="h-artists" hidden>
+        <h2 class="block__title" id="h-artists" data-i18n="search.artists"></h2>
+        <ul class="strip" id="artists"></ul>
+      </section>
+      <section class="block" id="albums-block" aria-labelledby="h-albums" hidden>
+        <h2 class="block__title" id="h-albums" data-i18n="search.albums"></h2>
+        <ul class="grid" id="results" aria-busy="false"></ul>
+      </section>
+      <div class="offer" id="trackers-offer" hidden>
+        <p class="offer__text" data-i18n="trackers.offerText"></p>
+        <button class="btn btn--line btn--auto" id="trackers-go" type="button"></button>
+      </div>
+    </div>
+
+    <!-- Templates sit after the 'Albums' heading so the static outline never skips a level. -->
+    <template id="tpl-card">
+      <li class="card">
+        <div class="sleeve"></div>
+        <h3 class="card__title"></h3>
+        <p class="card__sub"></p>
+        <p class="card__sub card__meta"></p>
+        <div class="card__action"></div>
+      </li>
+    </template>
+
+    <template id="tpl-row">
+      <li class="row">
+        <div class="sleeve sleeve--row"></div>
+        <div class="row__head">
+          <h3 class="row__title"></h3>
+          <p class="row__sub"></p>
+        </div>
+        <div class="row__band"></div>
+        <p class="row__explain" hidden></p>
+        <p class="row__note" hidden></p>
+        <div class="row__actions"></div>
+      </li>
+    </template>
+
+    <template id="tpl-artist">
+      <li>
+        <a class="artist">
+          <span class="portrait"></span>
+          <span class="artist__name"></span>
+          <span class="artist__dis"></span>
+        </a>
+      </li>
+    </template>
+
+    <div id="artist-view" hidden>
+      <button class="back" id="back" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        <span data-i18n="nav.backSearch"></span>
+      </button>
+      <div class="artist-head">
+        <span class="portrait portrait--head" id="artist-portrait" hidden></span>
+        <h1 class="artist-name" id="artist-name" tabindex="-1"></h1>
+      </div>
+      <div class="segments" id="segments" role="group" data-i18n-aria-label="artist.typeGroup" hidden></div>
+      <div class="order" id="order" role="group" data-i18n-aria-label="artist.orderGroup" hidden>
+        <span class="order__label" aria-hidden="true" data-i18n="artist.sort"></span>
+        <button class="seg seg--small" type="button" data-order="listens" data-i18n="artist.byListens"></button>
+        <button class="seg seg--small" type="button" data-order="date" data-i18n="artist.byDate"></button>
+      </div>
+      <div class="trackers" id="trackers" hidden>
+        <p class="trackers__text" id="trackers-text" role="status" tabindex="-1"></p>
+        <div class="chips" id="trackers-actions"></div>
+      </div>
+      <div class="notice" id="artist-notice" role="status" hidden>
+        <p class="notice__text" id="artist-hint"></p>
+        <button class="btn btn--line btn--auto" id="artist-retry" type="button" data-i18n="action.retry" hidden></button>
+      </div>
+      <h2 class="visually-hidden" data-i18n="artist.discography"></h2>
+      <ul class="grid" id="discography" aria-busy="false"></ul>
+      <details class="done" id="others-block" hidden>
+        <summary class="done__head"><h2 class="done__title" data-i18n="artist.others"></h2> <span class="done__count" id="others-count"></span></summary>
+        <p class="others__help" data-i18n="artist.othersHelp"></p>
+        <ul class="list" id="others" data-i18n-aria-label="artist.others"></ul>
+      </details>
+    </div>
+
+    <div id="album-view" hidden>
+      <button class="back" id="album-back" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        <span id="album-back-name" data-i18n="album.backArtist"></span>
+      </button>
+      <div class="album-head">
+        <div class="sleeve album-head__sleeve" id="album-sleeve"></div>
+        <div class="album-head__text">
+          <h1 class="album-title" id="album-title" tabindex="-1"></h1>
+          <p class="album-sub" id="album-sub"></p>
+        </div>
+        <div class="album-head__action" id="album-action"></div>
+      </div>
+      <section class="album-info" data-i18n-aria-label="album.infoLabel">
+        <p class="album-owned" id="album-owned" hidden></p>
+        <div class="album-upgrade" id="album-upgrade" hidden>
+          <p class="album-upgrade__text" id="album-upgrade-text"></p>
+          <div class="album-upgrade__action" id="album-upgrade-action"></div>
+        </div>
+        <div class="notice" id="album-info-notice" role="status" hidden>
+          <p class="notice__text" id="album-info-hint"></p>
+          <button class="btn btn--line btn--auto" id="album-info-retry" type="button" data-i18n="action.retry" hidden></button>
+        </div>
+        <div class="album-cols" id="album-cols" hidden>
+          <section class="tracks" aria-labelledby="h-album-tracks">
+            <h2 class="block__title" id="h-album-tracks" data-i18n="tracks.title"></h2>
+            <p class="block__sub" id="album-tracks-sub"></p>
+            <div id="album-tracks"></div>
+          </section>
+          <section class="editions" id="album-editions-block" aria-labelledby="h-album-editions" hidden>
+            <h2 class="block__title" id="h-album-editions" data-i18n="album.editions"></h2>
+            <p class="block__sub" id="album-editions-sub"></p>
+            <div id="album-editions"></div>
+          </section>
+        </div>
+      </section>
+      <h2 class="block__title" id="h-album-sources" tabindex="-1" data-i18n="trackers.title"></h2>
+      <p class="sources-status" id="album-status" role="status"></p>
+      <div class="notice" id="album-notice" role="status" hidden>
+        <p class="notice__text" id="album-hint"></p>
+        <button class="btn btn--line btn--auto" id="album-retry" type="button" data-i18n="action.retry" hidden></button>
+      </div>
+      <div class="chips" id="album-names" hidden></div>
+      <div class="chips chips--filter" id="album-filter" role="group" data-i18n-aria-label="album.filterLabel" hidden></div>
+      <ul class="list" id="album-sources" aria-labelledby="h-album-sources" aria-busy="false"></ul>
+    </div>
+
+    <div id="sources-view" hidden>
+      <button class="back" id="sources-back" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        <span data-i18n="nav.backSearch"></span>
+      </button>
+      <div class="page-head">
+        <h1 class="page-title" id="sources-title" tabindex="-1" data-i18n="trackers.title"></h1>
+        <p class="page-sub" data-i18n="sources.sub"></p>
+      </div>
+      <form class="searchbar searchbar--go" role="search" id="sources-form">
+        <label for="sq" class="visually-hidden" data-i18n="sources.placeholder"></label>
+        <svg class="searchbar__icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+        <input id="sq" name="sq" type="search" data-i18n-placeholder="sources.placeholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="100">
+        <button class="btn btn--blue btn--auto" id="sources-go" type="submit" data-i18n="sources.go"></button>
+      </form>
+      <p class="sources-status" id="sources-status" role="status"></p>
+      <div class="notice" id="sources-notice" role="status" hidden>
+        <p class="notice__text" id="sources-hint"></p>
+        <button class="btn btn--line btn--auto" id="sources-retry" type="button" data-i18n="action.retry" hidden></button>
+      </div>
+      <p class="sources-help" id="sources-help" data-i18n="sources.help"></p>
+      <ul class="list" id="sources" data-i18n-aria-label="sources.found" aria-busy="false"></ul>
+    </div>
+
+    <template id="tpl-source">
+      <li class="source">
+        <h2 class="source__title"></h2>
+        <p class="source__meta"></p>
+        <ul class="source__chips" data-i18n-aria-label="source.quality"></ul>
+        <p class="source__edition" hidden></p>
+        <p class="source__hint" hidden></p>
+        <p class="source__warn" data-i18n="source.warn" hidden></p>
+        <div class="source__action"></div>
+        <div class="source__files" role="status"></div>
+      </li>
+    </template>
+  </section>
+
+  <section id="panel-library" class="panel" role="tabpanel" aria-labelledby="tab-library" hidden>
+    <div class="page-head">
+      <h1 class="page-title" id="library-title" tabindex="-1" data-i18n="nav.library"></h1>
+      <p class="page-sub" id="library-summary"></p>
+    </div>
+
+    <!-- A child of the panel: it stays stuck over the shelves and the whole grid. -->
+    <form class="searchbar shelf__search" role="search" id="lib-form" hidden>
+      <label for="lq" class="visually-hidden" data-i18n="library.searchLabel"></label>
+      <svg class="searchbar__icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+      <input id="lq" name="lq" type="search" data-i18n-placeholder="library.placeholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="100">
+    </form>
+
+    <section class="block enroute" id="enroute-block" aria-labelledby="h-enroute" hidden>
+      <h2 class="block__title" id="h-enroute" data-i18n="library.enroute"></h2>
+      <ul class="list" id="requests" aria-labelledby="h-enroute"></ul>
+    </section>
+
+    <div class="wall" id="wall" data-finish="noyer" data-wall="uni">
+    <section class="room" id="room" aria-labelledby="h-room" hidden>
+      <div class="room__head">
+        <h2 class="block__title" id="h-room" data-i18n="room.title"></h2>
+        <div class="room__actions">
+          <button class="more" id="room-dig" type="button" data-i18n="room.digRandom"></button>
+          <button class="btn btn--line btn--auto" id="room-decorate" type="button" aria-expanded="false" aria-controls="decor" data-i18n="room.decorate"></button>
+        </div>
+      </div>
+      <div class="decor" id="decor" hidden>
+        <fieldset class="decor__set">
+          <legend class="decor__legend" data-i18n="decor.wood"></legend>
+          <div class="swatches" id="decor-finish"></div>
+        </fieldset>
+        <fieldset class="decor__set">
+          <legend class="decor__legend" data-i18n="decor.wall"></legend>
+          <div class="swatches" id="decor-wall"></div>
+        </fieldset>
+        <fieldset class="decor__set">
+          <legend class="decor__legend" data-i18n="decor.shelves"></legend>
+          <ol class="decor__shelves" id="decor-shelves"></ol>
+        </fieldset>
+        <div class="decor__foot">
+          <p class="decor__status" id="decor-status" role="status"></p>
+          <button class="more" id="decor-reset" type="button" data-i18n="decor.reset"></button>
+          <button class="btn btn--line btn--auto" id="decor-done" type="button" data-i18n="decor.done"></button>
+        </div>
+      </div>
+      <div class="racks" id="racks"></div>
+    </section>
+
+    <section class="block shelf" id="shelf-block" aria-labelledby="h-shelf">
+      <h2 class="block__title" id="h-shelf" data-i18n="library.allAlbums"></h2>
+      <div class="notice" id="library-notice" role="status" hidden>
+        <p class="notice__text" id="library-hint"></p>
+        <button class="btn btn--line btn--auto" id="library-retry" type="button" data-i18n="action.retry" hidden></button>
+      </div>
+      <div class="empty" id="library-empty" hidden>
+        <p class="empty__big" data-i18n="library.emptyBig"></p>
+        <p class="empty__small" data-i18n="library.emptySmall"></p>
+        <button class="btn btn--blue btn--auto" id="go-search" type="button" data-i18n="library.goSearch"></button>
+      </div>
+      <div class="shelf__tools" id="shelf-tools" hidden>
+        <div class="segments" id="lib-views" role="group" data-i18n-aria-label="library.viewLabel">
+          <button class="seg" type="button" data-view="albums" aria-pressed="true"><span data-i18n="search.albums"></span> <span class="seg__n" id="lib-n-albums"></span></button>
+          <button class="seg" type="button" data-view="artists" aria-pressed="false"><span data-i18n="search.artists"></span> <span class="seg__n" id="lib-n-artists"></span></button>
+        </div>
+        <div class="filters" id="lib-filters">
+          <span class="pick"><select id="lib-sort" data-i18n-aria-label="library.sortLabel">
+            <option value="added" data-i18n="library.sortAdded"></option>
+            <option value="played" data-i18n="library.sortPlayed"></option>
+            <option value="artist" data-i18n="library.sortArtist"></option>
+            <option value="year" data-i18n="library.sortYear"></option>
+            <option value="title" data-i18n="library.sortTitle"></option>
+          </select></span>
+          <span class="pick"><select id="lib-decade" data-i18n-aria-label="library.decadeLabel"><option value="" data-i18n="library.decades"></option></select></span>
+          <span class="pick"><select id="lib-genre" data-i18n-aria-label="library.genreLabel"><option value="" data-i18n="library.genres"></option></select></span>
+          <span class="pick" hidden><select id="lib-kind" data-i18n-aria-label="library.kindLabel"><option value="" data-i18n="library.kinds"></option></select></span>
+          <button class="seg seg--small" id="lib-unplayed" type="button" aria-pressed="false" data-i18n="shelf.never"></button>
+        </div>
+        <div class="shelf__artist" id="lib-artist" hidden>
+          <button class="back" id="lib-artist-back" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+            <span data-i18n="library.allArtists"></span>
+          </button>
+          <p class="shelf__artist-name" id="lib-artist-name" tabindex="-1"></p>
+        </div>
+        <div class="shelf__count" id="lib-count-box">
+          <p class="shelf__count-text" id="lib-count" role="status"></p>
+          <button class="more" id="lib-clear" type="button" data-i18n="library.clear" hidden></button>
+        </div>
+      </div>
+      <ul class="grid" id="library" aria-labelledby="h-shelf"></ul>
+      <ul class="shelf__artists" id="library-artists" data-i18n-aria-label="library.artistsLabel" hidden></ul>
+      <div class="shelf__more" id="lib-more" aria-hidden="true"></div>
+    </section>
+    </div>
+  </section>
+
+  <!-- The crate: moved into the tab that opens it, which then shows only the crate. -->
+  <section class="crate" id="crate" aria-labelledby="crate-title" hidden>
+    <button class="back" id="crate-back" type="button">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      <span id="crate-back-name" data-i18n="nav.library"></span>
+    </button>
+    <h1 class="page-title crate__title" id="crate-title" tabindex="-1"></h1>
+    <p class="page-sub" id="crate-sub"></p>
+    <div class="crate__tools" id="crate-tools"></div>
+    <div class="crate__stage" id="crate-stage" tabindex="0" role="group" data-i18n-aria-roledescription="shop.crate" aria-describedby="crate-help">
+      <div class="crate__records" id="crate-records"></div>
+      <div class="crate__box" aria-hidden="true"><span class="crate__label" id="crate-label"></span></div>
+    </div>
+    <p class="visually-hidden" id="crate-help" data-i18n="crate.help"></p>
+    <div class="crate__now">
+      <p class="crate__pos" id="crate-pos"></p>
+      <h2 class="crate__name" id="crate-name"></h2>
+      <p class="crate__meta" id="crate-meta"></p>
+      <div class="crate__actions" id="crate-actions"></div>
+    </div>
+    <div class="crate__nav">
+      <button class="btn btn--line" id="crate-prev" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg><span data-i18n="crate.prev"></span>
+      </button>
+      <button class="btn btn--line" id="crate-next" type="button">
+        <span data-i18n="crate.next"></span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <button class="more crate__shuffle" id="crate-shuffle" type="button" data-i18n="action.random"></button>
+    </div>
+  </section>
+
+  <!-- Objects for the shelves, drawn flat like a sleeve illustration; aria-hidden where used. -->
+  <template id="tpl-deco-platine">
+    <svg class="deco deco--platine" viewBox="0 0 160 92" aria-hidden="true" focusable="false">
+      <path class="o-top" d="M16 28h128l14 34H2z"/>
+      <rect class="o-wood" x="2" y="62" width="156" height="22"/>
+      <rect class="o-dark" x="10" y="84" width="12" height="6"/><rect class="o-dark" x="138" y="84" width="12" height="6"/>
+      <ellipse class="o-black" cx="68" cy="45" rx="52" ry="12.5"/>
+      <ellipse class="o-groove" cx="68" cy="45" rx="42" ry="10"/><ellipse class="o-groove" cx="68" cy="45" rx="31" ry="7.4"/>
+      <ellipse class="o-label" cx="68" cy="45" rx="14" ry="3.6"/>
+      <path class="o-arm" d="M142 33l-20 14h-14"/><circle class="o-metal" cx="142" cy="33" r="4.5"/>
+      <circle class="o-metal" cx="18" cy="73" r="3.5"/><circle class="o-metal" cx="30" cy="73" r="3.5"/>
+    </svg>
+  </template>
+  <template id="tpl-deco-plante">
+    <svg class="deco deco--plante" viewBox="0 0 90 140" aria-hidden="true" focusable="false">
+      <path class="o-leaf" d="M32 98C20 86 12 72 8 54c12 13 21 27 30 44z"/>
+      <path class="o-leaf2" d="M39 98C30 78 24 52 22 20c11 25 19 50 23 78z"/>
+      <path class="o-leaf" d="M45 98C40 70 39 40 45 4c6 36 7 66 4 94z"/>
+      <path class="o-leaf2" d="M51 98c5-22 12-44 20-68-1 26-8 48-14 68z"/>
+      <path class="o-leaf" d="M58 98c10-10 18-22 24-38-5 16-12 28-19 38z"/>
+      <rect class="o-clay-dark" x="17" y="94" width="56" height="10"/>
+      <path class="o-clay" d="M21 104h48l-6 34H27z"/>
+    </svg>
+  </template>
+  <template id="tpl-deco-lampe">
+    <svg class="deco deco--lampe" viewBox="0 0 96 144" aria-hidden="true" focusable="false">
+      <path class="o-light" d="M12 62h72l12 82H0z"/>
+      <path class="o-shade" d="M26 20h44l14 42H12z"/>
+      <rect class="o-shade-dark" x="12" y="60" width="72" height="4"/>
+      <rect class="o-metal" x="46" y="64" width="4" height="66"/>
+      <rect class="o-dark" x="28" y="130" width="40" height="10"/>
+    </svg>
+  </template>
+  <template id="tpl-deco-enceinte">
+    <svg class="deco deco--enceinte" viewBox="0 0 72 124" aria-hidden="true" focusable="false">
+      <rect class="o-wood" x="2" y="2" width="68" height="120"/>
+      <rect class="o-black" x="8" y="8" width="56" height="108"/>
+      <circle class="o-ring" cx="36" cy="30" r="9.5"/><circle class="o-dome" cx="36" cy="30" r="4"/>
+      <circle class="o-ring" cx="36" cy="77" r="23"/><circle class="o-cone" cx="36" cy="77" r="17"/><circle class="o-dome" cx="36" cy="77" r="5.5"/>
+    </svg>
+  </template>
+  <template id="tpl-deco-casque">
+    <svg class="deco deco--casque" viewBox="0 0 100 104" aria-hidden="true" focusable="false">
+      <rect class="o-metal" x="47" y="26" width="6" height="68"/>
+      <rect class="o-dark" x="28" y="94" width="44" height="8"/>
+      <path class="o-band" d="M20 60C20 18 80 18 80 60"/>
+      <ellipse class="o-black" cx="19" cy="66" rx="11" ry="16"/><ellipse class="o-black" cx="81" cy="66" rx="11" ry="16"/>
+      <ellipse class="o-cushion" cx="27" cy="66" rx="3.5" ry="12"/><ellipse class="o-cushion" cx="73" cy="66" rx="3.5" ry="12"/>
+    </svg>
+  </template>
+  <template id="tpl-deco-cactus">
+    <svg class="deco deco--cactus" viewBox="0 0 64 104" aria-hidden="true" focusable="false">
+      <rect class="o-leaf" x="25" y="12" width="14" height="62" rx="7"/>
+      <rect class="o-leaf2" x="11" y="26" width="9" height="26" rx="4.5"/><rect class="o-leaf2" x="11" y="44" width="18" height="9" rx="4.5"/>
+      <rect class="o-leaf2" x="44" y="20" width="9" height="24" rx="4.5"/><rect class="o-leaf2" x="35" y="36" width="18" height="9" rx="4.5"/>
+      <rect class="o-clay-dark" x="12" y="70" width="40" height="8"/>
+      <path class="o-clay" d="M15 78h34l-4 24H19z"/>
+    </svg>
+  </template>
+
+</main>
+
+<!-- The opening: once, at the first visit, over everything; the rest of the page is inert meanwhile. -->
+<div class="opening" id="opening" hidden>
+  <p class="opening__mark" aria-hidden="true">musaarr</p>
+  <button class="btn btn--line btn--auto opening__skip" id="opening-skip" type="button" data-i18n="opening.skip"></button>
+</div>
+
+<section class="shop3d" id="shop3d" tabindex="-1" data-i18n-aria-label="shop3d.label" hidden>
+  <canvas class="shop3d__scene" id="shop3d-scene" role="img" data-i18n-aria-label="shop3d.sceneLabel"></canvas>
+  <div class="shop3d__top">
+    <div class="shop3d__bar">
+      <h2 class="shop3d__title" data-i18n="shop.title"></h2>
+      <p class="shop3d__hint" id="shop3d-hint"></p>
+    </div>
+    <div class="shop3d__tools">
+      <button class="shop3d__exit" id="shop3d-exit" type="button" data-i18n="shop3d.exit"></button>
+      <button id="shop3d-random" type="button" data-i18n="action.random"></button>
+      <label class="shop3d__hide"><input type="checkbox" id="shop3d-hide"> <span data-i18n="shop3d.hide"></span></label>
+      <nav class="shop3d__tools" id="shop3d-aisles" data-i18n-aria-label="shop3d.aisles"></nav>
+    </div>
+  </div>
+  <div class="shop3d__tip" id="shop3d-tip" hidden></div>
+  <canvas class="shop3d__map" id="shop3d-map" aria-hidden="true" hidden></canvas>
+  <section class="shop3d__dig" id="shop3d-dig" data-i18n-aria-label="shop3d.digLabel" hidden>
+    <div class="shop3d__text">
+      <div class="shop3d__crates">
+        <button class="shop3d__step" id="shop3d-prev" type="button" data-i18n-aria-label="shop3d.prev">‹</button>
+        <p class="shop3d__pos" id="shop3d-pos"></p>
+        <button class="shop3d__step" id="shop3d-next" type="button" data-i18n-aria-label="shop3d.next">›</button>
+      </div>
+      <h3 id="shop3d-title"></h3>
+      <p class="shop3d__meta" id="shop3d-meta"></p>
+      <p class="shop3d__tags" id="shop3d-tags"></p>
+      <ol class="visually-hidden" id="shop3d-items" data-i18n-aria-label="shop3d.items"></ol>
+    </div>
+    <div class="shop3d__actions">
+      <button class="btn btn--blue" id="shop3d-open" type="button" data-i18n="shop3d.open"></button>
+      <button class="btn btn--line" id="shop3d-back" type="button" data-i18n="shop3d.backAisle"></button>
+    </div>
+  </section>
+  <p class="visually-hidden" id="shop3d-live" aria-live="polite"></p>
+  <div class="shop3d__loading" id="shop3d-loading" role="status">
+    <div class="shop3d__lp" aria-hidden="true"></div>
+    <p data-i18n="shop3d.loading"></p>
+  </div>
+</section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="visually-hidden" id="announcer" aria-live="polite"></div>
+
+</body>
+</html>

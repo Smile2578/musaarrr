@@ -1,0 +1,77 @@
+# The shop's starting stock, built once a month from open data (docs/donnees.md) and published as
+# stock.json.gz in the « stock » release; each Musaarr fetches it, then adds its own layer.
+name: Stock du disquaire
+
+on:
+  schedule:
+    - cron: "17 5 3 * *" # the 3rd, after a fresh MusicBrainz dump
+  workflow_dispatch:
+    inputs:
+      n:
+        description: Nombre d'albums visé
+        default: "40000"
+
+permissions:
+  contents: write # the release
+
+concurrency:
+  group: stock
+
+defaults:
+  run:
+    shell: bash # -e and pipefail: a failed dump read fails the build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180 # a run takes about two hours, most of it on Wikidata
+    env:
+      N: ${{ inputs.n || '40000' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - run: go build -o musaarr .
+
+      - name: Dump MusicBrainz des release groups
+        run: |
+          base=https://data.metabrainz.org/pub/musicbrainz/data/json-dumps
+          dir=$(curl -fsS "$base/LATEST" | tr -d '[:space:]')
+          [[ $dir =~ ^[0-9]{8}-[0-9]{6}$ ]] || { echo "::error::LATEST illisible : $dir"; exit 1; }
+          echo "MB_DUMP=$dir" >> "$GITHUB_ENV"
+          mkdir -p dumps && cd dumps
+          curl -fsSL --retry 5 -o release-group.tar.xz "$base/$dir/release-group.tar.xz"
+          curl -fsSL --retry 5 -o SHA256SUMS "$base/$dir/SHA256SUMS"
+          sha256sum -c --ignore-missing SHA256SUMS
+
+      - name: Construire le stock
+        env:
+          LISTENBRAINZ_TOKEN: ${{ secrets.LISTENBRAINZ_TOKEN }} # optional: higher rate limits
+        run: |
+          tar -xJOf dumps/release-group.tar.xz mbdump/release-group |
+            ./musaarr -build-stock stock.json.gz -n "$N" \
+              -sources "musicbrainz=$MB_DUMP,wikidata=$(date -u +%F)" 2>&1 | tee build.log
+          size=$(stat -c %s stock.json.gz)
+          { echo '```'; grep ' stock: ' build.log | cut -d' ' -f3-; echo "stock.json.gz : $size octets"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          ((size < 3000000)) || { echo "::error::stock.json.gz fait $size octets, plus de 3 Mo"; exit 1; }
+
+      - name: Publier
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          dated="stock-$(date -u +%Y-%m).json.gz"
+          cp stock.json.gz "$dated"
+          gh release view stock > /dev/null 2>&1 ||
+            gh release create stock --latest=false --title "Stock du disquaire" \
+              --notes "Stock de départ du disquaire, refait chaque mois. Données CC0 : MusicBrainz et Wikidata, classées par ListenBrainz (voir docs/donnees.md)."
+          gh release upload stock stock.json.gz "$dated" --clobber
+
+      - name: Garder le stock d'essai
+        if: github.ref != 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: stock
+          path: stock.json.gz
+          retention-days: 14

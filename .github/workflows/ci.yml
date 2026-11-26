@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test -race ./...
+      - run: for f in web/*.js; do node --check "$f"; done # a syntax error would blank the app, and no Go test runs it
+      - run: node --test test/shop3d/*.test.mjs # the 3D shop's logic that runs without a browser
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.10.0 ./...
+      - uses: goreleaser/goreleaser-action@v6 # the release config, checked before a release needs it
+        with:
+          version: "~> v2"
+          args: check
+
+  e2e: # the first run in Chromium, against a fake Lidarr, a fake Plex and a fake plex.tv
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - run: npm install --no-save --no-package-lock playwright@1.63.0 && npx playwright install --with-deps chromium
+      - run: node --test test/e2e/*.test.mjs

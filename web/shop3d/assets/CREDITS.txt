@@ -1,0 +1,6 @@
+Modèles et textures 3D du disquaire : Poly Haven (https://polyhaven.com), licence CC0.
+- Modèles : wooden_display_shelves_01, CashRegister_01, potted_plant_02, mid_century_lounge_chair, wooden_stool_01 (glTF 1k, réunis en .glb).
+- Textures : herringbone_parquet, oak_veneer_01, painted_plaster_wall (1k).
+Le comptoir, la hi-fi (platine, ampli, enceintes et leurs pieds) et les lampes sont modélisés pour le projet dans Blender par tools/blender/hifi.py (hifi/hifi.glb, même licence que le code).
+Tout le reste (bacs, disques, intercalaires, enseignes, affiches, néons, murs, arcades) est dessiné dans shop3d/*.js.
+Les textures sont converties des JPEG 1k de Poly Haven en KTX2 (Basis Universal) par tools/ktx2.mjs.

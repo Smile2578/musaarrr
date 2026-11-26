@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" data-i18n-wait>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+<meta name="robots" content="noindex">
+<title>Musaarr</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css">
+<script src="i18n.js" defer></script>
+<script src="setup.js" defer></script>
+<script src="session.js" defer></script>
+</head>
+<body class="signin-page">
+<header class="top">
+  <a class="wordmark" href="/">musaarr</a>
+  <div class="account">
+    <button class="btn btn--quiet btn--auto" id="signout" type="button" hidden data-i18n="auth.logout"></button>
+  </div>
+</header>
+
+<main class="signin setup" id="setup" aria-busy="true">
+  <div class="signin__wait" id="wait" role="status"><span class="visually-hidden" data-i18n="setup.loading"></span></div>
+
+  <div id="page" hidden>
+    <h1 class="signin__title" id="title" tabindex="-1"></h1>
+    <p class="signin__lead" id="lead"></p>
+
+    <section class="step" aria-labelledby="lidarr-title">
+      <h2 class="step__title" id="lidarr-title"><span class="step__num" aria-hidden="true">1</span>Lidarr</h2>
+      <form id="lidarr-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="lidarr-url" data-i18n="setup.lidarr.url"></label>
+          <input class="field__input" id="lidarr-url" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="512" aria-describedby="lidarr-url-hint">
+          <p class="field__hint" id="lidarr-url-hint"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="lidarr-key" data-i18n="setup.lidarr.key"></label>
+          <input class="field__input" id="lidarr-key" type="password" autocomplete="off" spellcheck="false" maxlength="256" aria-describedby="lidarr-key-hint">
+          <p class="field__hint" id="lidarr-key-hint"></p>
+        </div>
+        <p class="step__status" id="lidarr-status" role="status"></p>
+        <button class="btn btn--line btn--auto" id="lidarr-test" type="submit" data-i18n="setup.lidarr.test"></button>
+      </form>
+
+      <form class="step__more" id="choice-form" novalidate hidden>
+        <div class="field">
+          <label class="field__label" for="root" data-i18n="setup.lidarr.root"></label>
+          <span class="pick"><select id="root"></select></span>
+        </div>
+        <div class="field">
+          <label class="field__label" for="quality" data-i18n="setup.lidarr.quality"></label>
+          <span class="pick"><select id="quality"></select></span>
+        </div>
+        <div class="field">
+          <label class="field__label" for="metadata" data-i18n="setup.lidarr.metadata"></label>
+          <span class="pick"><select id="metadata" aria-describedby="metadata-hint"></select></span>
+          <p class="field__hint" id="metadata-hint" data-i18n="setup.lidarr.metadataHint"></p>
+        </div>
+        <p class="step__status" id="choice-status" role="status"></p>
+        <button class="btn btn--blue signin__submit" id="choice-save" type="submit" data-i18n="setup.save"></button>
+      </form>
+    </section>
+
+    <div class="setup__done" id="done" hidden>
+      <p class="setup__ready" data-i18n="setup.ready"></p>
+      <a class="btn btn--blue btn--auto" href="/" data-i18n="setup.open"></a>
+    </div>
+
+    <section class="step" id="plex" aria-labelledby="plex-title" hidden>
+      <h2 class="step__title" id="plex-title"><span class="step__num" aria-hidden="true">2</span>Plex <span class="step__optional" data-i18n="setup.optional"></span></h2>
+      <p class="step__text" data-i18n="setup.plex.lead"></p>
+      <p class="step__status is-ok" id="plex-now" tabindex="-1" hidden></p>
+      <div class="step__actions">
+        <button class="btn btn--line btn--auto" id="plex-start" type="button" data-i18n="setup.plex.start"></button>
+        <button class="btn btn--quiet btn--auto" id="plex-off" type="button" hidden data-i18n="setup.plex.disconnect"></button>
+      </div>
+      <div class="step__more" id="plex-pin" hidden>
+        <p class="step__text" id="plex-wait" role="status"></p>
+        <p class="setup__code" id="plex-code"></p>
+        <a class="btn btn--blue btn--auto" id="plex-link" target="_blank" rel="noopener noreferrer" data-i18n="setup.plex.open"></a>
+      </div>
+      <form class="step__more" id="plex-servers" novalidate hidden>
+        <fieldset class="choices">
+          <legend class="field__label" data-i18n="setup.plex.pick"></legend>
+          <div id="plex-list"></div>
+        </fieldset>
+        <button class="btn btn--blue signin__submit" id="plex-save" type="submit" data-i18n="setup.plex.use"></button>
+      </form>
+      <p class="step__status" id="plex-status" role="status"></p>
+    </section>
+
+    <section class="step" id="more" aria-labelledby="more-title" hidden>
+      <h2 class="step__title" id="more-title"><span class="step__num" aria-hidden="true">3</span><span data-i18n="setup.more.title"></span> <span class="step__optional" data-i18n="setup.optional"></span></h2>
+      <form id="more-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="listenbrainz" data-i18n="setup.more.listenbrainz"></label>
+          <input class="field__input" id="listenbrainz" data-key="LISTENBRAINZ_TOKEN" type="password" autocomplete="off" spellcheck="false" maxlength="256" aria-describedby="listenbrainz-hint">
+          <p class="field__hint" id="listenbrainz-hint"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="prowlarr-url" data-i18n="setup.more.prowlarrUrl"></label>
+          <input class="field__input" id="prowlarr-url" data-key="PROWLARR_URL" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="512" aria-describedby="prowlarr-url-hint">
+          <p class="field__hint" id="prowlarr-url-hint"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="prowlarr-key" data-i18n="setup.more.prowlarrKey"></label>
+          <input class="field__input" id="prowlarr-key" data-key="PROWLARR_API_KEY" type="password" autocomplete="off" spellcheck="false" maxlength="256" aria-describedby="prowlarr-key-hint">
+          <p class="field__hint" id="prowlarr-key-hint"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="hires-tags" data-i18n="setup.more.hiResTags"></label>
+          <input class="field__input" id="hires-tags" data-key="HIRES_TAGS" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="256" aria-describedby="hires-tags-hint">
+          <p class="field__hint" id="hires-tags-hint"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="multichannel-tags" data-i18n="setup.more.multichannelTags"></label>
+          <input class="field__input" id="multichannel-tags" data-key="MULTICHANNEL_TAGS" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="256" aria-describedby="multichannel-tags-hint">
+          <p class="field__hint" id="multichannel-tags-hint"></p>
+        </div>
+        <p class="step__status" id="more-status" role="status"></p>
+        <button class="btn btn--line btn--auto" id="more-save" type="submit" data-i18n="setup.save"></button>
+      </form>
+    </section>
+
+    <section class="step" id="backup" aria-labelledby="backup-title">
+      <h2 class="step__title" id="backup-title" data-i18n="setup.backup.title"></h2>
+      <p class="step__text" data-i18n="setup.backup.lead"></p>
+      <a class="btn btn--line btn--auto" id="backup-get" href="/api/settings/backup" download data-i18n="setup.backup.get"></a>
+      <form class="step__more" id="restore-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="restore-file" data-i18n="setup.backup.file"></label>
+          <input class="field__file" id="restore-file" type="file" accept=".zip,application/zip" aria-describedby="restore-hint">
+          <p class="field__hint" id="restore-hint" data-i18n="setup.backup.fileHint"></p>
+        </div>
+        <p class="step__status" id="restore-status" role="status"></p>
+        <button class="btn btn--line btn--auto" id="restore-go" type="submit" data-i18n="setup.backup.restore"></button>
+      </form>
+    </section>
+  </div>
+
+  <div class="notice is-error" id="offline" hidden>
+    <p class="notice__text" id="offline-text"></p>
+    <button class="btn btn--line btn--auto" id="retry" type="button" data-i18n="auth.retry"></button>
+  </div>
+</main>
+</body>
+</html>

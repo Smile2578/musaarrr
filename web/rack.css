@@ -1,0 +1,193 @@
+/* ---------- Le disquaire en racks ----------
+   One rack per genre, a row of wooden crates that scrolls sideways, one crate per run of letters.
+   The records stand in a well cut at the crate's lip: a record flipped forward falls behind the
+   wood, so nothing that moves ever covers the label or the caption. Covers stay true; the crates
+   are plywood, the dividers kraft (web/rack/SOURCES.md). */
+
+.shop { margin-top: 40px; }
+.shop__how { margin: -6px 0 12px; max-width: 60ch; font-size: 15px; color: var(--ink-soft); }
+.shop__how--touch { display: none; }
+@media (pointer: coarse) {
+  .shop__how--fine { display: none; }
+  .shop__how--touch { display: block; }
+}
+.shop__wait { margin: 0 0 8px; max-width: 60ch; font-size: 15px; color: var(--ink-soft); }
+.shop__hide { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; font-weight: 600; cursor: pointer; }
+.shop__hide input { width: 20px; height: 20px; margin: 0; }
+
+/* The floor: the opening lies over the racks in one grid cell, so nothing jumps when they show. While
+   the first covers come, the shop unpacks: three sleeves dropped one after the other into a crate. */
+.shop__floor { display: grid; }
+.shop__floor > * { grid-area: 1 / 1; min-width: 0; }
+.shop__opening { z-index: 1; align-self: start; display: grid; justify-items: center; gap: 14px; padding: 44px 0 28px; }
+.shop__opening-text { margin: 0; font-size: 15px; font-weight: 600; color: var(--ink-soft); }
+#shop-racks.is-opening .srack { visibility: hidden; }
+.unpack { position: relative; width: 132px; height: 122px; overflow: hidden; }
+.unpack__lp {
+  --stack: 0px;
+  position: absolute; left: 18px; bottom: 24px; width: 96px; height: 96px; opacity: 0;
+  transform: translateY(-130%); animation: unpack 2.4s var(--ease-out) infinite;
+}
+.unpack__lp:nth-child(1) { --stack: -14px; background: var(--blue); }
+.unpack__lp:nth-child(2) { --stack: -7px; background: var(--ochre); animation-delay: .4s; }
+.unpack__lp:nth-child(3) { background: var(--vermilion); animation-delay: .8s; }
+.unpack__lip { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: #8b6643 url(rack/bois.webp) 0 0 / 200px; border-top: 4px solid #c79f74; }
+@keyframes unpack {
+  0% { transform: translateY(-130%); opacity: 0; }
+  20%, 72% { transform: translateY(var(--stack)); opacity: 1; }
+  88%, 100% { transform: translateY(var(--stack)); opacity: 0; }
+}
+/* Then the crates of the first screen come in together, a little apart; a late cover fades in. */
+.bac.is-arriving { animation: bac-in .3s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 45ms); }
+@keyframes bac-in { from { opacity: 0; transform: translateY(14px); } }
+@keyframes bac-fade { from { opacity: 0; } }
+
+/* The aisles: one button per rack, stuck under the search field while the racks scroll by. */
+.aisles {
+  position: sticky; top: calc(env(safe-area-inset-top) + 70px); z-index: 2;
+  margin: 6px calc(-1 * var(--gutter)) 0; padding: 6px var(--gutter) 8px;
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  background: var(--ground); border-bottom: 1px solid var(--line);
+}
+.aisles::-webkit-scrollbar { display: none; }
+.aisle {
+  flex: none; display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 12px;
+  border: 2px solid var(--line); background: none; color: var(--ink);
+  font: 700 14px/1 var(--font); white-space: nowrap; cursor: pointer;
+}
+.aisle__n { font-weight: 400; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.aisle[aria-current="true"] { border-color: var(--ink); background: var(--ink); color: var(--ground); }
+.aisle[aria-current="true"] .aisle__n { color: inherit; }
+@media (hover: hover) and (pointer: fine) { .aisle:hover { border-color: var(--ink); } }
+
+/* A rack: its name, a letter per crate, the arrows, then the row of crates. */
+.srack { margin-top: 30px; scroll-margin-top: calc(env(safe-area-inset-top) + 130px); }
+.srack__head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-bottom: 4px; }
+.srack__title { margin: 0; font: 900 clamp(28px, 5vw, 40px)/1 var(--font); letter-spacing: -.035em; }
+.srack__n { margin-left: 10px; font: 400 15px/1 var(--font); letter-spacing: 0; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.srack__letters { display: flex; gap: 2px; flex: 1 1 240px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.srack__letters::-webkit-scrollbar { display: none; }
+.srack__letter {
+  flex: none; min-width: 44px; min-height: 40px; padding: 0 8px; border: 0; background: none; color: var(--ink-soft);
+  font: 800 14px/1 var(--font); white-space: nowrap; font-variant-numeric: tabular-nums; cursor: pointer;
+}
+.srack__letter.is-here { color: var(--ink); box-shadow: inset 0 -3px 0 var(--blue); }
+@media (hover: hover) and (pointer: fine) { .srack__letter:hover { color: var(--ink); } }
+.srack__row {
+  position: relative; /* the crates' offset parent */
+  display: flex; gap: clamp(18px, 2.4vw, 30px);
+  margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 12px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter);
+  scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+}
+
+/* A crate. --s is a record's side; the well holds the records, the tabs above them and the edges
+   of the records behind, which rise --peek each. */
+.bac {
+  --w: clamp(232px, 21vw, 284px);
+  --s: calc(var(--w) * .84);
+  --peek: 7px;
+  --tabs: 54px; /* room for the tab of a divider 9 records deep */
+  flex: none; width: var(--w); scroll-snap-align: start; display: grid; align-content: start; gap: 12px;
+}
+@media (max-width: 599px) { .bac { --w: min(74vw, 300px); } }
+.bac__box { position: relative; outline: none; }
+.bac__box:focus-visible { outline: 2px solid var(--blue-ink); outline-offset: 5px; }
+.bac__well {
+  position: relative; height: calc(var(--s) + var(--tabs) + 9 * var(--peek));
+  overflow: hidden; perspective: 900px; perspective-origin: 50% -40%;
+  cursor: grab; user-select: none; -webkit-user-select: none;
+}
+.bac__well.is-held { cursor: grabbing; }
+
+/* Every state keeps the same transform list, so a flip interpolates as a turn about the bottom edge. */
+.lp {
+  --d: 0;
+  --lift: 0px;
+  --flip: 0deg;
+  position: absolute; left: 8%; bottom: -12px; width: var(--s); aspect-ratio: 1;
+  transform-origin: 50% 100%;
+  transform: translate3d(0, calc(var(--d) * var(--peek) * -1 - var(--lift)), calc(var(--d) * -30px)) rotateX(var(--flip));
+  filter: brightness(calc(1 - var(--d) * .075));
+  z-index: calc(100 - var(--d));
+  transition: transform .46s var(--ease-out), filter .46s var(--ease-out);
+}
+.lp.is-front { cursor: pointer; }
+@media (hover: hover) and (pointer: fine) {
+  .lp.is-front:hover { --lift: 8px; }
+}
+.lp.is-flipped { --flip: -104deg; z-index: 150; filter: brightness(.45); }
+.lp.is-far { visibility: hidden; }
+.lp.is-deep { z-index: 1; }
+.lp:not(.is-front):not(.is-flipped), .lp__tab { touch-action: pan-x; } /* a finger on the tops digs; on a cover it scrolls */
+.bac__well.is-still .lp { transition: none; }
+
+.lp__sleeve { position: absolute; inset: 0; overflow: hidden; background: var(--raised); }
+.lp__sleeve::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 14%); pointer-events: none; }
+.lp__sleeve img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; opacity: 0; transition: opacity .3s var(--ease-out); }
+.lp__sleeve img.is-in { opacity: 1; }
+
+/* Under every picture, a printed sleeve: a spot ink, the title in Black, the artist under it. It shows while
+   the cover comes, and stays when there is none: never a blank square. */
+.lp__drawn {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; padding: 9%;
+  background: var(--ink-bg, var(--blue)); color: var(--ink-fg, var(--on-blue)); overflow: hidden;
+}
+.lp__drawn[data-ink="ochre"] { --ink-bg: var(--ochre); --ink-fg: var(--on-ochre); }
+.lp__drawn[data-ink="vermilion"] { --ink-bg: var(--vermilion); --ink-fg: var(--on-vermilion); }
+.lp__drawn[data-ink="green"] { --ink-bg: var(--green); --ink-fg: var(--on-green); }
+.lp__drawn[data-ink="paper"] { --ink-bg: #f2f2ee; --ink-fg: #101012; }
+.lp__drawn-title {
+  font: 900 calc(var(--s) * .13)/.92 var(--font); letter-spacing: -.035em; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lp__drawn-artist { font: 700 calc(var(--s) * .062)/1.15 var(--font); text-transform: uppercase; letter-spacing: .04em; overflow-wrap: anywhere; }
+
+/* A divider: a kraft card a tab taller than the records, the artist on the tab and on the card. */
+.lp--div .lp__card {
+  position: absolute; inset: 0; padding: 12% 9% 9%; color: #1c140b;
+  background: #a98762 url(rack/carton.webp) 0 0 / 160px;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 12%);
+}
+.lp__big {
+  margin: 0; font: 900 calc(var(--s) * .12)/.95 var(--font); letter-spacing: -.035em; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lp__small { margin: 8px 0 0; font: 700 13px/1.2 var(--font); }
+.lp__tab {
+  position: absolute; bottom: calc(100% - 1px); left: var(--tab-x, 8%);
+  max-width: 64%; height: 30px; padding: 0 10px; border: 0;
+  background: #a98762 url(rack/carton.webp) 0 0 / 160px; color: #1c140b;
+  font: 800 13px/30px var(--font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+}
+
+/* The lip: the crate's front plank, a paper sticker with the letters, the hard cast of the room. */
+.bac__lip {
+  position: relative; z-index: 1; display: flex; align-items: center; height: 60px; padding: 0 12px;
+  background: #8b6643 url(rack/bois.webp) 0 0 / 300px;
+  border-top: 5px solid #c79f74; border-bottom: 2px solid #5f3a21;
+  box-shadow: 0 7px 0 var(--cast);
+}
+.bac__sticker {
+  display: grid; gap: 2px; padding: 5px 10px 6px; background: #f2f2ee; color: #101012;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 25%);
+}
+.bac__label { font: 900 24px/1 var(--font); letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bac__count { font: 600 12px/1 var(--font); color: #3c3c42; }
+
+/* Under the crate: the front record, always three lines tall so the row never jumps. */
+.bac__cap { display: grid; gap: 3px; padding-top: 6px; min-width: 0; }
+.bac__title {
+  margin: 0; min-height: 2.3em; font: 800 17px/1.15 var(--font); letter-spacing: -.01em; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.bac__meta { margin: 0; font-size: 14px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bac__mine { color: var(--green-ink); font-weight: 700; }
+.bac__pos { margin: 0; font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp { transition: none; }
+  .unpack__lp { animation: none; opacity: 1; transform: translateY(var(--stack)); }
+  .bac.is-arriving { animation-name: bac-fade; }
+  .lp.is-front:hover { --lift: 0px; }
+}

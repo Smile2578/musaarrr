@@ -1,0 +1,35 @@
+# Musaarr reachable only on a tailnet, in HTTPS, through Tailscale serve. See README.md,
+# « Derrière Tailscale ». TS_AUTHKEY_MUSAARR goes in the compose's .env, once.
+services:
+  ts-musaarr:
+    image: tailscale/tailscale:stable # pin the version you run
+    hostname: musaarr # the name on the tailnet; it shows in public certificate logs
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY_MUSAARR}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_SERVE_CONFIG=/config/serve.json
+      # Userspace mode (the default): neither /dev/net/tun nor NET_ADMIN.
+    volumes:
+      - ./ts/state:/var/lib/tailscale
+      - ./ts/config:/config # the folder that holds serve.json, not the file alone
+    restart: unless-stopped
+
+  musaarr:
+    image: ghcr.io/smile2578/musaarrr:latest
+    network_mode: service:ts-musaarr
+    depends_on:
+      - ts-musaarr
+    environment:
+      - LISTEN_ADDR=127.0.0.1:8080 # only Tailscale serve reaches it
+      # To let Tailscale identities in without a password: AUTH_HEADER=Tailscale-User-Login
+      # and ALLOWED_LOGIN=<the admin's Tailscale login>.
+    volumes:
+      - musaarr-data:/data
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+volumes:
+  musaarr-data:

@@ -1,0 +1,19 @@
+# Musaarr next to an existing Lidarr: `docker compose up -d`, then open http://<this machine>:8080
+# from the local network to create the admin account. See README.md, « Installer ».
+services:
+  musaarr:
+    image: ghcr.io/smile2578/musaarrr:latest # or a version, vX.Y.Z
+    container_name: musaarr
+    ports:
+      - "8080:8080" # safer on the LAN address alone: "192.168.1.10:8080:8080"
+    volumes:
+      - musaarr-data:/data # a Docker volume: the image's user can write to it
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    # Lidarr in another compose project: join its network here, or type its address in the wizard.
+
+volumes:
+  musaarr-data:
