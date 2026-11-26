@@ -1,4 +1,4 @@
-// Musaarr's 3D stage (lot 3): the Blue Note record, printed as a halftone. app.js loads it after
+// Musaarr's 3D stage (lot 3): the record, printed as a halftone. app.js loads it after
 // the first paint, never with reduced motion or Save-Data; without WebGL 2 it throws and the app
 // stays whole. It plays the opening once, then turns behind « Quel artiste ? », speeds up with a
 // blue wave while a search runs, and sweeps a green glint when an album reaches Plex.
