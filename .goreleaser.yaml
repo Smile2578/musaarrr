@@ -18,7 +18,7 @@ checksum:
 dockers_v2:
   - images: [ghcr.io/smile2578/musaarrr]
     dockerfile: Dockerfile.release
-    tags: ["{{ .Tag }}", latest]
+    tags: ["{{ .Tag }}", "v{{ .Major }}.{{ .Minor }}", "v{{ .Major }}", latest]
     labels:
       org.opencontainers.image.title: Musaarr
       org.opencontainers.image.description: Album requests for Lidarr and Plex
